@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:paddingHorizontal="8dp"
+>
+
+    <!-- NAMA (STICKY LEFT) -->
+  <TextView
+    android:id="@+id/textNama"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cell_border"
+    android:text="Nama"
+    android:textColor="@android:color/black"
+    android:textStyle="bold"
+    android:padding="8dp"/>
+
+	<TextView
+		android:id="@+id/textDate"
+		android:layout_width="100dp"
+		android:layout_height="wrap_content"
+		android:background="@drawable/cell_border"
+		android:text="Tanggal"
+		android:textColor="@android:color/black"
+		android:textStyle="bold"
+		android:padding="8dp"/>
+
+	<TextView
+		android:id="@+id/textAlamat"
+		android:layout_width="120dp"
+		android:layout_height="wrap_content"
+		android:background="@drawable/cell_border"
+		android:text="Alamat"
+		android:textColor="@android:color/black"
+		android:textStyle="bold"
+		android:padding="8dp"/>
+
+	<TextView
+		android:id="@+id/textHarga"
+		android:layout_width="80dp"
+		android:layout_height="wrap_content"
+		android:background="@drawable/cell_border"
+		android:text="Harga"
+		android:textColor="@android:color/black"
+		android:textStyle="bold"
+		android:padding="8dp"/>
+
+	<TextView
+		android:id="@+id/textStatus"
+		android:layout_width="80dp"
+		android:layout_height="wrap_content"
+		android:background="@drawable/cell_border"
+		android:text="Status"
+		android:textColor="@android:color/black"
+		android:textStyle="bold"
+		android:padding="8dp"/>
+
+    <!-- AKSI (STICKY RIGHT) -->
+  <TextView
+		android:layout_width="60dp"
+		android:layout_height="wrap_content"
+		android:background="@drawable/cell_border"
+		android:text="Aksi"
+		android:textColor="@android:color/black"
+		android:textStyle="bold"
+		android:padding="8dp"/>
+</LinearLayout>
