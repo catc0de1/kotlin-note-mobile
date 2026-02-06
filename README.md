@@ -1,33 +1,38 @@
-# Kotlin Minimal Starter
+# Note App
 
-A **minimal, from-scratch Kotlin Android starter** designed for **headless development** using **CLI tools only**.  
-No Android Studio. No Emulator.  
-Development and deployment are done via **USB debugging** to a physical Android device.
-
-This project is optimized for **Linux Mint** as the primary development environment, but it can be adapted to other operating systems with minor adjustments.
+Android App built with kotlin and App Compact. Android material are optional. Pure using usb debugging and from scratch template from [https://github.com/catc0de1/kotlin-minimal-starter](https://github.com/catc0de1/kotlin-minimal-starter.git)
 
 ---
 
 ## Project Goals
 
-- Android app development **without Android Studio**
-- **No emulator**, deploy directly to a real device
-- Lightweight, transparent, and scriptable workflow
-- Suitable for **low-resource machines**
-- Educational: understand Android build system from the ground up
+### Features
 
----
+- Create note app for spesific task
+- Can create new item with validation
+- Update and deletable item
+- Excel like style
+- Internal storage app
+- Manual backup with csv or json
 
-## Concept Overview
+### To Do
 
-This project uses:
-- **Gradle (Kotlin DSL)**
-- **Android SDK Command Line Tools**
-- **ADB via USB Debugging**
-- **VS Code (or any editor)**
-- **Physical Android device**
+#### Main feature
+- [x] Excel like prototipe for note items
+- [ ] Create static column (name and action button)
+- [ ] Create search bar on bottom (static)
+- [ ] Build create button on left bottom (static)
+- [ ] Functional CRUD item
 
-> GUI is optional. The entire workflow works in a terminal.
+#### Data management
+- [ ] About, backup, and exit on drawable
+- [ ] Using internal or room storage
+- [ ] Manual backup using json or csv
+
+#### Finishing
+- [ ] Style finishing
+- [ ] Brand and themes
+- [ ] Independent deployment
 
 ---
 
@@ -45,7 +50,7 @@ This project uses:
 
 ---
 
-## Environment Setup (Linux Mint)
+## Environment Setup
 
 Read more environment setup for Linux Mint in my blog [here](https://zblogzone.netlify.app/blog/tutorial/kotlin-cli-only).
 
@@ -139,10 +144,28 @@ app/build/outputs/apk/debug/app-debug.apk
 ./gradlew installDebug
 ```
 
+or
+
+```bash
+adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
+If want continuous development
+
+```bash
+./gradlew installDebug --continuous
+```
+
 ### Launch App
 
 ```adb
 adb shell monkey -p your.package.name -c android.intent.category.LAUNCHER 1
+```
+
+### Uninstall App
+
+```adb
+adb uninstall com.catcode.noteapp
 ```
 
 ---
@@ -158,35 +181,17 @@ adb logcat
 Filtered:
 
 ```bash
-adb logcat | grep YourTag
+adb logcat | grep AndroidRuntime
 ```
 
----
+Clean log:
 
-## Notes
-
-- This project intentionally avoids Android Studio
-- No emulator support by default
-- Best used with:
-  - VS Code
-  - Vim / Neovim
-  - Any lightweight editor
-- GUI tools are optional, not required
-
----
-
-## Cross-Platform Notes
-
-|    OS    |              Notes              |
-|----------|---------------------------------|
-|Linux Mint|Primary supported                |
-|Ubuntu    |Same as Mint                     |
-|Arch	     |Manual JDK & SDK paths           |
-|macOS     |Replace paths & use Homebrew     |
-|Windows   |Requires WSL or manual SDK config|
+```bash
+adb logcat -c
+```
 
 ---
 
 ## License
 
-This Starter is [MIT Licensed](https://github.com/CatC0de1/kotlin-minimal-starter?tab=MIT-1-ov-file)
+This Starter is [MIT Licensed](https://github.com/catc0de1/kotlin-note-mobile?tab=MIT-1-ov-file)
