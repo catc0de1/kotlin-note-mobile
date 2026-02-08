@@ -18,7 +18,17 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
 
     val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-    recyclerView.layoutManager = LinearLayoutManager(this)
+
+    recyclerView.layoutManager =
+      object : LinearLayoutManager(this) {
+        override fun canScrollVertically() = false
+        override fun canScrollHorizontally() = false
+      }
+
+    recyclerView.apply {
+      isNestedScrollingEnabled = false
+      overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+    }
 
     val notes = mutableListOf(
       Note(1, "Andi", "2024-01-01", "Surabaya", 50000, true),
@@ -48,15 +58,6 @@ class MainActivity : AppCompatActivity() {
       Note(25, "Agus", "2024-01-25", "Duduk", 70000, false),
     )
 
-    recyclerView.adapter = NoteAdapter(
-      notes,
-      onEdit = { index ->
-        // TODO: edit dialog
-      },
-      onDelete = { index ->
-        notes.removeAt(index)
-        recyclerView.adapter?.notifyItemRemoved(index)
-      }
-    )
+    recyclerView.adapter = NoteAdapter(notes)
   }
 }

@@ -11,8 +11,8 @@ import com.catcode.note_app.model.Note
 
 class NoteAdapter(
     private val notes: MutableList<Note>,
-    private val onEdit: (Int) -> Unit,
-    private val onDelete: (Int) -> Unit
+    // private val onEdit: (Int) -> Unit,
+    // private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -22,7 +22,7 @@ class NoteAdapter(
         val alamat: TextView = view.findViewById(R.id.textAlamat)
         val harga: TextView = view.findViewById(R.id.textHarga)
         val status: TextView = view.findViewById(R.id.textStatus)
-        val action: ImageButton = view.findViewById(R.id.btnAction)
+        // val action: ImageButton = view.findViewById(R.id.btnAction)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,10 +41,10 @@ class NoteAdapter(
         holder.harga.text = note.harga.toString()
         holder.status.text = if (note.status) "Aktif" else "Nonaktif"
 
-        holder.action.setOnClickListener {
+        // holder.action.setOnClickListener {
             // nanti bisa popup menu (Edit / Delete)
-            onEdit(position)
-        }
+            // onEdit(position)
+        // }
     }
 
     override fun getItemCount(): Int = notes.size
