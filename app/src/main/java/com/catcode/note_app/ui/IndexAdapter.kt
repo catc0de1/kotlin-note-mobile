@@ -22,6 +22,13 @@ class IndexAdapter(private val count: Int) :
 
   override fun onBindViewHolder(holder: VH, position: Int) {
     holder.text.text = (position + 1).toString()
+
+    val bg = if (position % 2 == 0)
+        R.drawable.cell_index_even
+    else
+        R.drawable.cell_index_odd
+
+    holder.itemView.setBackgroundResource(bg)
   }
 
   override fun getItemCount() = count

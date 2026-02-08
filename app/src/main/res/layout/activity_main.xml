@@ -24,10 +24,16 @@
       android:textColor="@android:color/black"/>
 
     <!-- Main Content -->
-    <include
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="8dp"
+    >
+      <include
         layout="@layout/content_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </LinearLayout>
   </LinearLayout>
   
   <!-- Sidebar -->

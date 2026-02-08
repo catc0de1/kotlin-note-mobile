@@ -34,6 +34,13 @@ class NoteAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val note = notes[position]
 
+        val bg = if (position % 2 == 0)
+            R.drawable.cell_row_even
+        else
+            R.drawable.cell_row_odd
+
+        holder.itemView.setBackgroundResource(bg)
+
         // holder.id.text = note.id.toString()
         holder.nama.text = note.nama
         holder.date.text = note.date

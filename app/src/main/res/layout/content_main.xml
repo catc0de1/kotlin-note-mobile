@@ -7,25 +7,23 @@
 
   <!-- HEADER -->
   <LinearLayout
-    android:background="@drawable/cell_header_bg"
     android:orientation="horizontal"
-    android:paddingLeft="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <!-- NO HEADER -->
     <TextView
-      android:layout_width="42dp"
+      android:layout_width="50dp"
       android:layout_height="wrap_content"
       android:text="No"
       android:textStyle="bold"
       android:gravity="center"
-      android:background="@drawable/cell_border"
+      android:background="@drawable/cell_header_bg"
+      android:textColor="#333333"
       android:padding="8dp"/>
 
     <!-- SCROLLABLE HEADER -->
     <HorizontalScrollView
-      android:background="@drawable/cell_header_bg"
       android:id="@+id/headerScroll"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -48,7 +46,6 @@
     <!-- INDEX -->
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/indexRecycler"
-      android:paddingLeft="8dp"
       android:layout_width="50dp"
       android:layout_height="match_parent"/>
 
