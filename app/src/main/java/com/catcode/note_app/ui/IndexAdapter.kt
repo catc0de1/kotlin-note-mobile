@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
 
-class IndexAdapter(private val count: Int) :
+class IndexAdapter(private var count: Int) :
   RecyclerView.Adapter<IndexAdapter.VH>() {
 
   class VH(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,4 +32,9 @@ class IndexAdapter(private val count: Int) :
   }
 
   override fun getItemCount() = count
+
+  fun updateCount(newCount: Int) {
+    count = newCount
+    notifyDataSetChanged()
+  }
 }

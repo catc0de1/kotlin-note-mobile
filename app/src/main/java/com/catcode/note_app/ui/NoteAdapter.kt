@@ -7,20 +7,20 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
-import com.catcode.note_app.model.Note
+import com.catcode.note_app.data.entity.NoteEntity
 
 class NoteAdapter(
-    private val notes: MutableList<Note>,
+    private val notes: MutableList<NoteEntity>,
     // private val onEdit: (Int) -> Unit,
     // private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         // val id: TextView = view.findViewById(R.id.textId)
-        val nama: TextView = view.findViewById(R.id.textNama)
+        val name: TextView = view.findViewById(R.id.textName)
         val date: TextView = view.findViewById(R.id.textDate)
-        val alamat: TextView = view.findViewById(R.id.textAlamat)
-        val harga: TextView = view.findViewById(R.id.textHarga)
+        val address: TextView = view.findViewById(R.id.textAddress)
+        val price: TextView = view.findViewById(R.id.textPrice)
         val status: TextView = view.findViewById(R.id.textStatus)
         // val action: ImageButton = view.findViewById(R.id.btnAction)
     }
@@ -42,11 +42,11 @@ class NoteAdapter(
         holder.itemView.setBackgroundResource(bg)
 
         // holder.id.text = note.id.toString()
-        holder.nama.text = note.nama
+        holder.name.text = note.name
         holder.date.text = note.date
-        holder.alamat.text = note.alamat
-        holder.harga.text = note.harga.toString()
-        holder.status.text = if (note.status) "Aktif" else "Nonaktif"
+        holder.address.text = note.address
+        holder.price.text = note.price.toString()
+        holder.status.text = note.status
 
         // holder.action.setOnClickListener {
             // nanti bisa popup menu (Edit / Delete)
@@ -55,4 +55,10 @@ class NoteAdapter(
     }
 
     override fun getItemCount(): Int = notes.size
+
+    fun submitData(newNotes: List<NoteEntity>) {
+      notes.clear()
+      notes.addAll(newNotes)
+      notifyDataSetChanged()
+    }
 }
