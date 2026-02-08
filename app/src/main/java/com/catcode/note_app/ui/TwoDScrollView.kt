@@ -6,17 +6,23 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.recyclerview.widget.RecyclerView
+import android.widget.HorizontalScrollView
 
 class TwoDScrollView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null
 ) : ViewGroup(context, attrs) {
 
+  var indexRecycler: RecyclerView? = null
+
   private var lastX = 0f
   private var lastY = 0f
 
   private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
   private var isDragging = false
+
+  var headerScroll: HorizontalScrollView? = null
 
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
@@ -60,6 +66,10 @@ class TwoDScrollView @JvmOverloads constructor(
         val newScrollY = (scrollY + dy).coerceIn(0, maxScrollY)
 
         scrollTo(newScrollX, newScrollY)
+
+        indexRecycler?.scrollBy(0, dy)
+        
+        headerScroll?.scrollTo(newScrollX, 0)
 
         lastX = event.x
         lastY = event.y

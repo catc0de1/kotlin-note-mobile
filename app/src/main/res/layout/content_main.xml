@@ -1,26 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.catcode.note_app.ui.TwoDScrollView
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <!-- HEADER -->
   <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@drawable/cell_header_bg"
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <include
-      android:id="@+id/header"
-      layout="@layout/item_note_header"
-      android:layout_width="wrap_content"
+    <!-- NO HEADER -->
+    <TextView
+      android:layout_width="42dp"
       android:layout_height="wrap_content"
-      android:background="@drawable/table_border" />
+      android:text="No"
+      android:textStyle="bold"
+      android:gravity="center"
+      android:background="@drawable/cell_border"
+      android:padding="8dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+    <!-- SCROLLABLE HEADER -->
+    <HorizontalScrollView
+      android:background="@drawable/cell_header_bg"
+      android:id="@+id/headerScroll"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="none">
 
+      <include
+        android:id="@+id/header"
+        layout="@layout/item_note_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </HorizontalScrollView>
   </LinearLayout>
 
-</com.catcode.note_app.ui.TwoDScrollView>
+  <!-- BODY -->
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- INDEX -->
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/indexRecycler"
+      android:paddingLeft="8dp"
+      android:layout_width="50dp"
+      android:layout_height="match_parent"/>
+
+    <!-- TABLE -->
+    <com.catcode.note_app.ui.TwoDScrollView
+      android:id="@+id/tableScroll"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </com.catcode.note_app.ui.TwoDScrollView>
+
+  </LinearLayout>
+</LinearLayout>

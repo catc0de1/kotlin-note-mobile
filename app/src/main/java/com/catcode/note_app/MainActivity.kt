@@ -9,8 +9,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.HorizontalScrollView
+import com.catcode.note_app.R
 import com.catcode.note_app.model.Note
 import com.catcode.note_app.ui.NoteAdapter
+import com.catcode.note_app.ui.IndexAdapter
+import com.catcode.note_app.ui.TwoDScrollView
+import android.view.MotionEvent
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,16 +24,17 @@ class MainActivity : AppCompatActivity() {
 
     val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
-    recyclerView.layoutManager =
-      object : LinearLayoutManager(this) {
-        override fun canScrollVertically() = false
-        override fun canScrollHorizontally() = false
-      }
+    val mainRv = findViewById<RecyclerView>(R.id.recyclerView)
+    val indexRv = findViewById<RecyclerView>(R.id.indexRecycler)
 
-    recyclerView.apply {
-      isNestedScrollingEnabled = false
-      overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-    }
+    val tableScroll = findViewById<TwoDScrollView>(R.id.tableScroll)
+    val headerScroll = findViewById<HorizontalScrollView>(R.id.headerScroll)
+
+    tableScroll.indexRecycler = indexRv
+    tableScroll.headerScroll = headerScroll
+
+    mainRv.layoutManager = LinearLayoutManager(this)
+    indexRv.layoutManager = LinearLayoutManager(this)
 
     val notes = mutableListOf(
       Note(1, "Andi", "2024-01-01", "Surabaya", 50000, true),
@@ -58,6 +64,28 @@ class MainActivity : AppCompatActivity() {
       Note(25, "Agus", "2024-01-25", "Duduk", 70000, false),
     )
 
-    recyclerView.adapter = NoteAdapter(notes)
+    mainRv.adapter = NoteAdapter(notes)
+    indexRv.adapter = IndexAdapter(notes.size)
+
+    mainRv.isNestedScrollingEnabled = false
+    indexRv.isNestedScrollingEnabled = false
+
+    indexRv.setOnTouchListener { _, event ->
+        when (event.actionMasked) {
+        MotionEvent.ACTION_DOWN,
+        MotionEvent.ACTION_MOVE,
+        MotionEvent.ACTION_UP -> {
+            tableScroll.dispatchTouchEvent(event)
+        }
+    }
+      // tableScroll.dispatchTouchEvent(event)
+      true
+    }
+
+    // mainRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+    //   override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+    //     indexRv.scrollBy(0, dy)
+    //   }
+    // })
   }
 }
