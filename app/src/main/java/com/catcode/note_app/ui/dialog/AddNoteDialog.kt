@@ -1,4 +1,4 @@
-package com.catcode.note_app.ui
+package com.catcode.note_app.ui.dialog
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

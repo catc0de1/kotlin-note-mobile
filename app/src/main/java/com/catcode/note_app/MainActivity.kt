@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.launch
 import android.widget.HorizontalScrollView
 import android.widget.EditText
@@ -20,13 +21,17 @@ import com.catcode.note_app.R
 import com.catcode.note_app.ui.NoteAdapter
 import com.catcode.note_app.ui.IndexAdapter
 import com.catcode.note_app.ui.TwoDScrollView
-import com.catcode.note_app.ui.AddNoteDialog
+import com.catcode.note_app.ui.NoteViewModel
+import com.catcode.note_app.ui.NoteViewModelFactory
+import com.catcode.note_app.ui.dialog.AddNoteDialog
+import com.catcode.note_app.ui.dialog.ConfirmDeleteDialog
 import com.catcode.note_app.data.db.AppDatabase
 import com.catcode.note_app.data.repository.NoteRepository
 import com.catcode.note_app.data.entity.NoteEntity
 
 class MainActivity : AppCompatActivity() {
 
+  private lateinit var viewModel: NoteViewModel
   private lateinit var repository: NoteRepository
   private lateinit var noteAdapter: NoteAdapter
   private lateinit var indexAdapter: IndexAdapter
@@ -46,14 +51,42 @@ class MainActivity : AppCompatActivity() {
     val database = AppDatabase.getInstance(this)
     repository = NoteRepository(database.noteDao())
 
-    // noteAdapter = NoteAdapter(mutableListOf())
-    noteAdapter = NoteAdapter(mutableListOf()) {
-      position -> indexAdapter.setSelectedPosition(position)
-    }
+    val factory = NoteViewModelFactory(repository)
+    viewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
 
-    indexAdapter = IndexAdapter(0) {
-      position -> noteAdapter.setSelectedPosition(position)
-    }
+    // noteAdapter = NoteAdapter(mutableListOf())
+    noteAdapter = NoteAdapter(
+      mutableListOf(),
+      onRowSelected = {
+        position -> indexAdapter.setSelectedPosition(position)
+      },
+      onDelete = {
+        note -> ConfirmDeleteDialog.show(
+          context = this,
+          onConfirm = {
+            viewModel.deleteNote(note)
+          }
+        )
+      }
+    )
+
+    indexAdapter = IndexAdapter(
+      0,
+      onIndexSelected = {
+        position -> noteAdapter.setSelectedPosition(position)
+      },
+      onDelete = {
+        position -> val note = viewModel.notes.value.getOrNull(position)
+          ?: return@IndexAdapter
+
+        ConfirmDeleteDialog.show(
+          context = this,
+          onConfirm = {
+            viewModel.deleteNote(note)
+          }
+        )
+      }
+    )
 
     mainRv.layoutManager = LinearLayoutManager(this)
     indexRv.layoutManager = LinearLayoutManager(this)
@@ -62,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     indexRv.adapter = indexAdapter
 
     loadNotes()
+    viewModel.loadNotes()
 
     tableScroll.indexRecycler = indexRv
     tableScroll.headerScroll = headerScroll
@@ -73,9 +107,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadNotes() {
       lifecycleScope.launch {
-        val notes = repository.getAllNotes()
-        noteAdapter.submitData(notes)
-        indexAdapter.updateCount(notes.size)
+        viewModel.notes.collect { notes ->
+          noteAdapter.submitData(notes)
+          indexAdapter.updateCount(notes.size)
+        }
       }
     }
 

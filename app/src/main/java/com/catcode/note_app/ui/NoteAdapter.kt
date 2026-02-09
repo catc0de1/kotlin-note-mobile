@@ -15,7 +15,7 @@ class NoteAdapter(
     private val notes: MutableList<NoteEntity>,
     private val onRowSelected: (Int) -> Unit,
     // private val onEdit: (Int) -> Unit,
-    // private val onDelete: (Int) -> Unit
+    private val onDelete: (NoteEntity) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
   private var selectedPosition = -1
@@ -96,7 +96,7 @@ class NoteAdapter(
               true
             }
             R.id.action_delete -> {
-              // TODO: UI only (logic nanti)
+              onDelete(note)
               true
             }
             else -> false

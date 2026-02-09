@@ -1,6 +1,7 @@
 package com.catcode.note_app.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,4 +15,7 @@ interface NoteDao {
 
   @Query("SELECT * FROM notes ORDER BY date ASC")
   suspend fun getAll(): List<NoteEntity>
+
+  @Delete
+  suspend fun delete(note: NoteEntity)
 }

@@ -7,10 +7,12 @@ import android.widget.TextView
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
+import com.catcode.note_app.data.entity.NoteEntity
 
 class IndexAdapter(
   private var count: Int,
-  private val onIndexSelected: (Int) -> Unit
+  private val onIndexSelected: (Int) -> Unit,
+  private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<IndexAdapter.VH>() {
 
   private var selectedPosition = -1
@@ -56,7 +58,7 @@ class IndexAdapter(
             true
           }
           R.id.action_delete -> {
-            // TODO: UI only (logic nanti)
+            onDelete(position)
             true
           }
           else -> false
