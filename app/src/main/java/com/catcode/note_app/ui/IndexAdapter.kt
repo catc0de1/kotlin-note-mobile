@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
 
@@ -39,8 +40,31 @@ class IndexAdapter(
     holder.itemView.setBackgroundResource(bg)
 
     holder.itemView.setOnClickListener {
-      setSelectedPosition(position)
-      onIndexSelected(position)
+      select(position)
+    }
+
+    holder.itemView.setOnLongClickListener {
+      select(position)
+
+      val popup = PopupMenu(holder.itemView.context, holder.itemView)
+      popup.inflate(R.menu.menu_note_row)
+
+      popup.setOnMenuItemClickListener { item ->
+        when (item.itemId) {
+          R.id.action_edit -> {
+            // TODO: UI only (logic nanti)
+            true
+          }
+          R.id.action_delete -> {
+            // TODO: UI only (logic nanti)
+            true
+          }
+          else -> false
+        }
+      }
+
+      popup.show()
+      true
     }
   }
 
@@ -63,5 +87,15 @@ class IndexAdapter(
     val oldPos = selectedPosition
     selectedPosition = -1
     if (oldPos != -1) notifyItemChanged(oldPos)
+  }
+
+  private fun select(position: Int) {
+    val oldPos = selectedPosition
+    selectedPosition = position
+
+    if (oldPos != -1) notifyItemChanged(oldPos)
+    notifyItemChanged(position)
+
+    onIndexSelected(position)
   }
 }

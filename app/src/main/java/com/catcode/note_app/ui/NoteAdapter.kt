@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
 import com.catcode.note_app.data.entity.NoteEntity
@@ -37,7 +38,7 @@ class NoteAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = notes[position]
+      val note = notes[position]
 
       val bg = when {
         position == selectedPosition ->
@@ -74,6 +75,36 @@ class NoteAdapter(
         notifyItemChanged(position)
 
         onRowSelected(position)
+      }
+
+      holder.itemView.setOnLongClickListener {
+        val oldPos = selectedPosition
+        selectedPosition = position
+
+        if (oldPos != -1) notifyItemChanged(oldPos)
+        notifyItemChanged(position)
+
+        onRowSelected(position)
+
+        val popup = PopupMenu(holder.itemView.context, holder.itemView)
+        popup.inflate(R.menu.menu_note_row)
+
+        popup.setOnMenuItemClickListener { item ->
+          when (item.itemId) {
+            R.id.action_edit -> {
+              // TODO: UI only (logic nanti)
+              true
+            }
+            R.id.action_delete -> {
+              // TODO: UI only (logic nanti)
+              true
+            }
+            else -> false
+          }
+        }
+
+        popup.show()
+        true
       }
     }
 
