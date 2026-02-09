@@ -42,17 +42,29 @@
     android:maxLines="1"
   />
 
-  <TextView
-    android:id="@+id/textPrice"
-    android:layout_width="80dp"
+  <LinearLayout
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:autoSizeTextType="uniform"
-    android:autoSizeMinTextSize="10sp"
-    android:autoSizeMaxTextSize="14sp"
-    android:autoSizeStepGranularity="1sp"
-    android:maxLines="1"
-  />
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+      android:id="@+id/textPriceLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Rp"
+      android:textSize="12sp"
+      android:maxLines="1" />
+
+    <TextView
+      android:id="@+id/textPriceValue"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="end"
+      android:textSize="12sp"
+      android:maxLines="1" />
+  </LinearLayout>
 
   <TextView
     android:id="@+id/textStatus"

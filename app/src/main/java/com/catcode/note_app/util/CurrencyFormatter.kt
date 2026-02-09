@@ -11,7 +11,7 @@ object CurrencyFormatter {
     val clean = raw.replace("[^\\d]".toRegex(), "")
     if (clean.isEmpty()) return ""
 
-    val value = clean.toLong()
+    val value = clean.toLongOrNull() ?: return ""
     val formatter = NumberFormat.getInstance(Locale("in", "ID"))
 
     return "Rp ${formatter.format(value)}"

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
 import com.catcode.note_app.data.entity.NoteEntity
+import com.catcode.note_app.util.CurrencyFormatter
 
 class NoteAdapter(
     private val notes: MutableList<NoteEntity>,
@@ -20,7 +21,8 @@ class NoteAdapter(
         val name: TextView = view.findViewById(R.id.textName)
         val date: TextView = view.findViewById(R.id.textDate)
         val address: TextView = view.findViewById(R.id.textAddress)
-        val price: TextView = view.findViewById(R.id.textPrice)
+        val priceLabel: TextView = view.findViewById(R.id.textPriceLabel)
+        val priceValue: TextView = view.findViewById(R.id.textPriceValue)
         val status: TextView = view.findViewById(R.id.textStatus)
         // val action: ImageButton = view.findViewById(R.id.btnAction)
     }
@@ -45,8 +47,12 @@ class NoteAdapter(
         holder.name.text = note.name
         holder.date.text = note.date
         holder.address.text = note.address
-        holder.price.text = note.price.toString()
         holder.status.text = note.status
+
+        holder.priceLabel.text = "Rp"
+        holder.priceValue.text =
+          CurrencyFormatter.formatRupiah(note.price.toString())
+            .replace("Rp ", "")
 
         // holder.action.setOnClickListener {
             // nanti bisa popup menu (Edit / Delete)
