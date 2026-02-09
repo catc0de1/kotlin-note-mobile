@@ -19,9 +19,9 @@ Android App built with kotlin and App Compact. Android material are optional. Pu
 
 #### Main feature
 - [x] Excel like prototipe for note items
-- [ ] Create static column (name and action button)
+- [x] Create static column (index)
 - [ ] Create search bar on bottom (static)
-- [ ] Build create button on left bottom (static)
+- [x] Build create button on left bottom (static)
 - [ ] Functional CRUD item
 
 #### Data management

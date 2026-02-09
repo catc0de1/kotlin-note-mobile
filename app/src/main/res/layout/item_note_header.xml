@@ -49,9 +49,9 @@
 
 	<TextView
 		android:id="@+id/textStatus"
-		android:layout_width="80dp"
+		android:layout_width="140dp"
 		android:layout_height="wrap_content"
-		android:text="Status"
+		android:text="Keterangan"
     android:background="@drawable/cell_header_bg"
     android:textColor="#333333"
 		android:textStyle="bold"

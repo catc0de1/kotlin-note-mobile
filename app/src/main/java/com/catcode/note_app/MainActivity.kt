@@ -7,22 +7,30 @@ import android.os.Bundle
 // import androidx.compose.runtime.Composable
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import android.widget.HorizontalScrollView
+import android.widget.EditText
 import android.view.MotionEvent
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.catcode.note_app.R
-import com.catcode.note_app.model.Note
 import com.catcode.note_app.ui.NoteAdapter
 import com.catcode.note_app.ui.IndexAdapter
 import com.catcode.note_app.ui.TwoDScrollView
+import com.catcode.note_app.ui.AddNoteDialog
 import com.catcode.note_app.data.db.AppDatabase
 import com.catcode.note_app.data.repository.NoteRepository
 import com.catcode.note_app.data.entity.NoteEntity
 
 class MainActivity : AppCompatActivity() {
+
+  private lateinit var repository: NoteRepository
+  private lateinit var noteAdapter: NoteAdapter
+  private lateinit var indexAdapter: IndexAdapter
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -30,60 +38,47 @@ class MainActivity : AppCompatActivity() {
     val mainRv = findViewById<RecyclerView>(R.id.recyclerView)
     val indexRv = findViewById<RecyclerView>(R.id.indexRecycler)
 
+    val fabAdd = findViewById<FloatingActionButton>(R.id.fabAdd)
+
     val tableScroll = findViewById<TwoDScrollView>(R.id.tableScroll)
     val headerScroll = findViewById<HorizontalScrollView>(R.id.headerScroll)
 
     val database = AppDatabase.getInstance(this)
-    val repository = NoteRepository(database.noteDao())
+    repository = NoteRepository(database.noteDao())
 
-    val noteAdapter = NoteAdapter(mutableListOf())
-    val indexAdapter = IndexAdapter(0)
-
-    mainRv.adapter = noteAdapter
-    indexRv.adapter = indexAdapter
-
-    tableScroll.indexRecycler = indexRv
-    tableScroll.headerScroll = headerScroll
+    noteAdapter = NoteAdapter(mutableListOf())
+    indexAdapter = IndexAdapter(0)
 
     mainRv.layoutManager = LinearLayoutManager(this)
     indexRv.layoutManager = LinearLayoutManager(this)
 
-    lifecycleScope.launch {
+    mainRv.adapter = noteAdapter
+    indexRv.adapter = indexAdapter
 
-      repository.insertNote(
-        NoteEntity(
-          name = "Andi",
-          date = "2024-01-01",
-          address = "Surabaya",
-          price = 50000,
-          status = "Lunas"
-        )
-      )
+    loadNotes()
 
-      val notes = repository.getAllNotes()
-      noteAdapter.submitData(notes)
-      indexAdapter.updateCount(notes.size)
+    tableScroll.indexRecycler = indexRv
+    tableScroll.headerScroll = headerScroll
+
+    fabAdd.setOnClickListener {
+      openAddNoteDialog()
+    }
+  }
+
+    private fun loadNotes() {
+      lifecycleScope.launch {
+        val notes = repository.getAllNotes()
+        noteAdapter.submitData(notes)
+        indexAdapter.updateCount(notes.size)
+      }
     }
 
-    mainRv.isNestedScrollingEnabled = false
-    indexRv.isNestedScrollingEnabled = false
-
-    indexRv.setOnTouchListener { _, event ->
-        when (event.actionMasked) {
-        MotionEvent.ACTION_DOWN,
-        MotionEvent.ACTION_MOVE,
-        MotionEvent.ACTION_UP -> {
-            tableScroll.dispatchTouchEvent(event)
-        }
-    }
-      // tableScroll.dispatchTouchEvent(event)
-      true
-    }
-
-    // mainRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-    //   override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-    //     indexRv.scrollBy(0, dy)
-    //   }
-    // })
+    private fun openAddNoteDialog() {
+    AddNoteDialog(
+      context = this,
+      repository = repository,
+      lifecycleScope = lifecycleScope,
+      onSuccess = { loadNotes() }
+    ).show()
   }
 }

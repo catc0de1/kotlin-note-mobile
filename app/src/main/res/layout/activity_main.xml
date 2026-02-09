@@ -6,36 +6,54 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
 >
-  <LinearLayout
+
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- App Header -->
-    <TextView
-      android:id="@+id/appTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Note App"
-      android:textSize="20sp"
-      android:textStyle="bold"
-      android:padding="16dp"
-      android:background="?attr/colorPrimary"
-      android:textColor="@android:color/black"/>
-
-    <!-- Main Content -->
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:padding="8dp"
-    >
-      <include
-        layout="@layout/content_main"
+      android:orientation="vertical">
+
+      <!-- App Header -->
+      <TextView
+        android:id="@+id/appTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:text="Note App"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:background="?attr/colorPrimary"
+        android:textColor="@android:color/black"/>
+
+      <!-- Main Content -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+      >
+        <include
+          layout="@layout/content_main"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+      </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
-  
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabAdd"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="16dp"
+      android:layout_gravity="bottom|end"
+      android:contentDescription="Add Note"
+      android:src="@android:drawable/ic_input_add"
+      app:tint="@android:color/white"
+    />
+
+  </FrameLayout>
+
   <!-- Sidebar -->
   <com.google.android.material.navigation.NavigationView
     android:id="@+id/navigationView"
