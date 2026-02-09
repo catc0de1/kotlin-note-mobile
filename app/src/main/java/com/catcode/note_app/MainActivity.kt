@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity() {
       position -> indexAdapter.setSelectedPosition(position)
     }
 
-    indexAdapter = IndexAdapter(0)
+    indexAdapter = IndexAdapter(0) {
+      position -> noteAdapter.setSelectedPosition(position)
+    }
 
     mainRv.layoutManager = LinearLayoutManager(this)
     indexRv.layoutManager = LinearLayoutManager(this)

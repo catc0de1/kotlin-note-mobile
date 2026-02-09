@@ -92,4 +92,12 @@ class NoteAdapter(
   }
 
   fun hasSelection(): Boolean =selectedPosition != -1
+
+  fun setSelectedPosition(position: Int) {
+    val oldPos = selectedPosition
+    selectedPosition = position
+
+    if (oldPos != -1) notifyItemChanged(oldPos)
+    if (position != -1) notifyItemChanged(position)
+  }
 }

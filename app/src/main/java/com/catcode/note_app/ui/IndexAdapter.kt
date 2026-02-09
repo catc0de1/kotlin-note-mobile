@@ -7,8 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
 
-class IndexAdapter(private var count: Int) :
-  RecyclerView.Adapter<IndexAdapter.VH>() {
+class IndexAdapter(
+  private var count: Int,
+  private val onIndexSelected: (Int) -> Unit
+) : RecyclerView.Adapter<IndexAdapter.VH>() {
 
   private var selectedPosition = -1
 
@@ -35,6 +37,11 @@ class IndexAdapter(private var count: Int) :
     }
 
     holder.itemView.setBackgroundResource(bg)
+
+    holder.itemView.setOnClickListener {
+      setSelectedPosition(position)
+      onIndexSelected(position)
+    }
   }
 
   override fun getItemCount() = count
