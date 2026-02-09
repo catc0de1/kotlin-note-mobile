@@ -12,6 +12,6 @@ interface NoteDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insert(note: NoteEntity)
 
-  @Query("SELECT * FROM notes ORDER BY id ASC")
+  @Query("SELECT * FROM notes ORDER BY date ASC")
   suspend fun getAll(): List<NoteEntity>
 }
