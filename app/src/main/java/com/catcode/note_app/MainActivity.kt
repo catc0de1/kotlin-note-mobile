@@ -46,7 +46,11 @@ class MainActivity : AppCompatActivity() {
     val database = AppDatabase.getInstance(this)
     repository = NoteRepository(database.noteDao())
 
-    noteAdapter = NoteAdapter(mutableListOf())
+    // noteAdapter = NoteAdapter(mutableListOf())
+    noteAdapter = NoteAdapter(mutableListOf()) {
+      position -> indexAdapter.setSelectedPosition(position)
+    }
+
     indexAdapter = IndexAdapter(0)
 
     mainRv.layoutManager = LinearLayoutManager(this)
@@ -80,5 +84,15 @@ class MainActivity : AppCompatActivity() {
       lifecycleScope = lifecycleScope,
       onSuccess = { loadNotes() }
     ).show()
+  }
+
+
+  override fun onBackPressed() {
+    if (noteAdapter.hasSelection()) {
+      noteAdapter.clearSelection()
+      indexAdapter.clearSelection()
+    } else {
+      super.onBackPressed()
+    }
   }
 }

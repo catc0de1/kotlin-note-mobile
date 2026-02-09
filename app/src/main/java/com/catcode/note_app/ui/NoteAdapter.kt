@@ -12,9 +12,12 @@ import com.catcode.note_app.util.CurrencyFormatter
 
 class NoteAdapter(
     private val notes: MutableList<NoteEntity>,
+    private val onRowSelected: (Int) -> Unit,
     // private val onEdit: (Int) -> Unit,
     // private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+
+  private var selectedPosition = -1
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         // val id: TextView = view.findViewById(R.id.textId)
@@ -36,12 +39,16 @@ class NoteAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val note = notes[position]
 
-        val bg = if (position % 2 == 0)
-            R.drawable.cell_row_even
-        else
-            R.drawable.cell_row_odd
+      val bg = when {
+        position == selectedPosition ->
+          R.drawable.cell_row_selected
+        position % 2 == 0 ->
+          R.drawable.cell_row_even
+        else ->
+          R.drawable.cell_row_odd
+      }
 
-        holder.itemView.setBackgroundResource(bg)
+      holder.itemView.setBackgroundResource(bg)
 
         // holder.id.text = note.id.toString()
         holder.name.text = note.name
@@ -58,6 +65,16 @@ class NoteAdapter(
             // nanti bisa popup menu (Edit / Delete)
             // onEdit(position)
         // }
+
+      holder.itemView.setOnClickListener {
+        val oldPos = selectedPosition
+        selectedPosition = position
+
+        if (oldPos != -1) notifyItemChanged(oldPos)
+        notifyItemChanged(position)
+
+        onRowSelected(position)
+      }
     }
 
     override fun getItemCount(): Int = notes.size
@@ -67,4 +84,12 @@ class NoteAdapter(
       notes.addAll(newNotes)
       notifyDataSetChanged()
     }
+
+  fun clearSelection() {
+    val oldPos = selectedPosition
+    selectedPosition = -1
+    if (oldPos != -1) notifyItemChanged(oldPos)
+  }
+
+  fun hasSelection(): Boolean =selectedPosition != -1
 }
