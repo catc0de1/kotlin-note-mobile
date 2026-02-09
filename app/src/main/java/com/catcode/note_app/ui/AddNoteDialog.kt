@@ -61,30 +61,52 @@ class AddNoteDialog(
 
     setupCurrencyFormatter(inputPrice)
 
-    AlertDialog.Builder(context)
+    val dialog = AlertDialog.Builder(context)
       .setTitle("Tambah Catatan")
       .setView(view)
-      .setPositiveButton("Simpan") { _, _ ->
+      .setPositiveButton("Simpan", null)
+      .setNegativeButton("Batal", null)
+      .create()
+    
+    dialog.setOnShowListener {
+      val btnSave = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+      btnSave.setOnClickListener {
+        val name = inputName.text.toString().trim()
+        val address = inputAddress.text.toString().trim()
+        val status = inputStatus.text.toString().ifBlank { "-" }
+
+        if (name.isEmpty()) {
+          inputName.error = "Nama Wajib Diisi"
+          return@setOnClickListener
+        }
+
+        if (address.isEmpty()) {
+          inputAddress.error = "Alamat Wajib Diisi"
+          return@setOnClickListener
+        }
 
         val rawPrice = CurrencyFormatter.extractRawValue(
           inputPrice.text.toString()
         )
 
         val note = NoteEntity(
-          name = inputName.text.toString(),
+          name = name,
           date = inputDate.text.toString(),
-          address = inputAddress.text.toString(),
+          address = address,
           price = rawPrice,
-          status = inputStatus.text.toString()
+          status = status
         )
 
         lifecycleScope.launch {
           repository.insertNote(note)
           onSuccess()
+          dialog.dismiss()
         }
       }
-      .setNegativeButton("Batal", null)
-      .show()
+    }
+
+    dialog.show()
   }
 
   private fun setupCurrencyFormatter(inputPrice: EditText) {
