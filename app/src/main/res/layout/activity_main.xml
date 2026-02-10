@@ -48,7 +48,9 @@
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="80dp"
       >
         <include
           layout="@layout/content_main"
@@ -57,16 +59,54 @@
       </LinearLayout>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-      android:id="@+id/fabAdd"
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:id="@+id/searchTopDivider"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="16dp"
-      android:layout_gravity="bottom|end"
-      android:contentDescription="Add Note"
-      android:src="@drawable/ic_add_eeeeee"
-      app:tint="@android:color/white"
-    />
+      android:layout_gravity="bottom"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:background="@drawable/bg_search_top_divider"
+      android:padding="8dp"
+    >
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchContainer"
+        android:layout_gravity="bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:hint="Cari Berdasarkan Nama"
+        app:startIconDrawable="@drawable/ic_search_333333"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#CCCCCC"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp"
+      >
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/searchInput"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:singleLine="true"
+          android:imeOptions="actionSearch"
+          android:inputType="text"
+        />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Add Note"
+        android:src="@drawable/ic_add_eeeeee"
+        app:tint="@android:color/white"
+      />
+
+    </LinearLayout>
 
   </FrameLayout>
 
