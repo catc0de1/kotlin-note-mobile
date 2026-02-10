@@ -128,6 +128,16 @@ class MainActivity : AppCompatActivity() {
     tableScroll.indexRecycler = indexRv
     tableScroll.headerScroll = headerScroll
 
+    headerScroll.setOnTouchListener { _, event ->
+      tableScroll.dispatchTouchEvent(event)
+      true
+    }
+
+    indexRv.setOnTouchListener { _, event ->
+      tableScroll.dispatchTouchEvent(event)
+      true
+    }
+
     fabAdd.setOnClickListener {
       openAddNoteDialog()
     }
