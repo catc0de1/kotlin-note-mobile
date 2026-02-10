@@ -22,11 +22,11 @@ Android App built with kotlin and App Compact. Android material are optional. Pu
 - [x] Create static column (index)
 - [ ] Create search bar on bottom (static)
 - [x] Build create button on left bottom (static)
-- [ ] Functional CRUD item
+- [x] Functional CRUD item
 
 #### Data management
 - [ ] About, backup, and exit on drawable
-- [ ] Using internal or room storage
+- [x] Using internal or room storage
 - [ ] Manual backup using json or csv
 
 #### Finishing

@@ -34,4 +34,11 @@ class NoteViewModel(
       loadNotes()
     }
   }
+
+  fun updateNote(note: NoteEntity) {
+    viewModelScope.launch {
+      repository.updateNote(note)
+      loadNotes()
+    }
+  }
 }

@@ -7,11 +7,11 @@ import android.widget.TextView
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.catcode.note_app.R
-import com.catcode.note_app.data.entity.NoteEntity
 
 class IndexAdapter(
   private var count: Int,
   private val onIndexSelected: (Int) -> Unit,
+  private val onEdit: (Int) -> Unit,
   private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<IndexAdapter.VH>() {
 
@@ -54,7 +54,7 @@ class IndexAdapter(
       popup.setOnMenuItemClickListener { item ->
         when (item.itemId) {
           R.id.action_edit -> {
-            // TODO: UI only (logic nanti)
+            onEdit(position)
             true
           }
           R.id.action_delete -> {

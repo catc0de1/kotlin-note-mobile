@@ -14,7 +14,7 @@ import com.catcode.note_app.util.CurrencyFormatter
 class NoteAdapter(
     private val notes: MutableList<NoteEntity>,
     private val onRowSelected: (Int) -> Unit,
-    // private val onEdit: (Int) -> Unit,
+    private val onEdit: (NoteEntity) -> Unit,
     private val onDelete: (NoteEntity) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
@@ -92,7 +92,7 @@ class NoteAdapter(
         popup.setOnMenuItemClickListener { item ->
           when (item.itemId) {
             R.id.action_edit -> {
-              // TODO: UI only (logic nanti)
+              onEdit(note)
               true
             }
             R.id.action_delete -> {

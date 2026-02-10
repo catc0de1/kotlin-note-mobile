@@ -24,6 +24,7 @@ import com.catcode.note_app.ui.TwoDScrollView
 import com.catcode.note_app.ui.NoteViewModel
 import com.catcode.note_app.ui.NoteViewModelFactory
 import com.catcode.note_app.ui.dialog.AddNoteDialog
+import com.catcode.note_app.ui.dialog.EditNoteDialog
 import com.catcode.note_app.ui.dialog.ConfirmDeleteDialog
 import com.catcode.note_app.data.db.AppDatabase
 import com.catcode.note_app.data.repository.NoteRepository
@@ -60,6 +61,15 @@ class MainActivity : AppCompatActivity() {
       onRowSelected = {
         position -> indexAdapter.setSelectedPosition(position)
       },
+      onEdit = {
+        note -> EditNoteDialog(
+          context = this,
+          note = note,
+          onSubmit = {
+            updated -> viewModel.updateNote(updated)
+          }
+        ).show()
+      },
       onDelete = {
         note -> ConfirmDeleteDialog.show(
           context = this,
@@ -74,6 +84,18 @@ class MainActivity : AppCompatActivity() {
       0,
       onIndexSelected = {
         position -> noteAdapter.setSelectedPosition(position)
+      },
+      onEdit ={
+        position -> val note = viewModel.notes.value.getOrNull(position)
+          ?: return@IndexAdapter
+
+        EditNoteDialog(
+          context = this,
+          note = note,
+          onSubmit = {
+            updated -> viewModel.updateNote(updated)
+          }
+        ).show()
       },
       onDelete = {
         position -> val note = viewModel.notes.value.getOrNull(position)
@@ -94,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     mainRv.adapter = noteAdapter
     indexRv.adapter = indexAdapter
 
-    loadNotes()
+    observeNotes()
     viewModel.loadNotes()
 
     tableScroll.indexRecycler = indexRv
@@ -105,7 +127,7 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-    private fun loadNotes() {
+    private fun observeNotes() {
       lifecycleScope.launch {
         viewModel.notes.collect { notes ->
           noteAdapter.submitData(notes)
@@ -119,7 +141,9 @@ class MainActivity : AppCompatActivity() {
       context = this,
       repository = repository,
       lifecycleScope = lifecycleScope,
-      onSuccess = { loadNotes() }
+      onSuccess = {
+        viewModel.loadNotes()
+      }
     ).show()
   }
 
