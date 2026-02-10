@@ -39,7 +39,7 @@
           android:id="@+id/moreActionMenu"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:src="@android:drawable/ic_menu_more"
+          android:src="@drawable/ic_more_vertical_1f1f1f"
           android:contentDescription="Menu"
           android:tint="@android:color/black"/>
       </LinearLayout>
@@ -64,7 +64,7 @@
       android:layout_margin="16dp"
       android:layout_gravity="bottom|end"
       android:contentDescription="Add Note"
-      android:src="@android:drawable/ic_input_add"
+      android:src="@drawable/ic_add_eeeeee"
       app:tint="@android:color/white"
     />
 
