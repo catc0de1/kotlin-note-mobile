@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.ViewModelProvider
+import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.coroutines.launch
 import android.widget.HorizontalScrollView
 import android.widget.EditText
+import android.widget.ImageView
 import android.view.MotionEvent
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.catcode.note_app.R
@@ -23,6 +25,7 @@ import com.catcode.note_app.ui.IndexAdapter
 import com.catcode.note_app.ui.TwoDScrollView
 import com.catcode.note_app.ui.NoteViewModel
 import com.catcode.note_app.ui.NoteViewModelFactory
+import com.catcode.note_app.ui.dialog.MoreActionDialog
 import com.catcode.note_app.ui.dialog.AddNoteDialog
 import com.catcode.note_app.ui.dialog.EditNoteDialog
 import com.catcode.note_app.ui.dialog.ConfirmDeleteDialog
@@ -54,6 +57,9 @@ class MainActivity : AppCompatActivity() {
 
     val factory = NoteViewModelFactory(repository)
     viewModel = ViewModelProvider(this, factory)[NoteViewModel::class.java]
+
+    val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+    val moreActionMenu = findViewById<ImageView>(R.id.moreActionMenu)
 
     // noteAdapter = NoteAdapter(mutableListOf())
     noteAdapter = NoteAdapter(
@@ -125,6 +131,11 @@ class MainActivity : AppCompatActivity() {
     fabAdd.setOnClickListener {
       openAddNoteDialog()
     }
+
+    MoreActionDialog(
+      activity = this,
+      drawerLayout = drawerLayout
+    ).bind(moreActionMenu)
   }
 
     private fun observeNotes() {

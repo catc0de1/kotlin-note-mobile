@@ -17,16 +17,32 @@
       android:orientation="vertical">
 
       <!-- App Header -->
-      <TextView
-        android:id="@+id/appTitle"
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Note App"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         android:padding="16dp"
         android:background="?attr/colorPrimary"
-        android:textColor="@android:color/black"/>
+        android:gravity="center_vertical">
+
+        <TextView
+          android:id="@+id/appTitle"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Note App"
+          android:textSize="20sp"
+          android:textStyle="bold"
+          android:textColor="@android:color/black"/>
+
+        <ImageView
+          android:id="@+id/moreActionMenu"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@android:drawable/ic_menu_more"
+          android:contentDescription="Menu"
+          android:tint="@android:color/black"/>
+      </LinearLayout>
 
       <!-- Main Content -->
       <LinearLayout
