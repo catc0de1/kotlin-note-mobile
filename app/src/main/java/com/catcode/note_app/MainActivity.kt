@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.ViewModelProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.coroutines.launch
+import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.EditText
 import android.widget.ImageView
@@ -29,6 +30,7 @@ import com.catcode.note_app.ui.dialog.MoreActionDialog
 import com.catcode.note_app.ui.dialog.AddNoteDialog
 import com.catcode.note_app.ui.dialog.EditNoteDialog
 import com.catcode.note_app.ui.dialog.ConfirmDeleteDialog
+import com.catcode.note_app.ui.dialog.ConfirmResetDialog
 import com.catcode.note_app.data.db.AppDatabase
 import com.catcode.note_app.data.repository.NoteRepository
 import com.catcode.note_app.data.entity.NoteEntity
@@ -158,6 +160,23 @@ class MainActivity : AppCompatActivity() {
         exportCsvLauncher.launch("notes-${System.currentTimeMillis()}.csv")
       }
     ).bind(moreActionMenu)
+
+    val navigationView =
+      findViewById<com.google.android.material.navigation.NavigationView>(
+        R.id.navigationView
+      )
+
+    val headerView = navigationView.getHeaderView(0)
+    val btnResetData = headerView.findViewById<Button>(R.id.btnResetData)
+
+    btnResetData.setOnClickListener {
+      com.catcode.note_app.ui.dialog.ConfirmResetDialog.show(
+        context = this,
+        onConfirm = {
+          viewModel.deleteAllNotes()
+        }
+      )
+    }
   }
 
     private fun observeNotes() {

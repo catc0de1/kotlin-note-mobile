@@ -50,4 +50,11 @@ class NoteViewModel(
       onResult(notes)
     }
   }
+
+  fun deleteAllNotes() {
+    viewModelScope.launch {
+      repository.deleteAllNotes()
+      loadNotes()
+    }
+  }
 }
