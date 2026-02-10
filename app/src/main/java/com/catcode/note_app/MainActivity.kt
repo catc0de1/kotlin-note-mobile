@@ -40,6 +40,15 @@ class MainActivity : AppCompatActivity() {
   private lateinit var noteAdapter: NoteAdapter
   private lateinit var indexAdapter: IndexAdapter
 
+  private val exportCsvLauncher =
+    registerForActivityResult(
+      androidx.activity.result.contract.ActivityResultContracts.CreateDocument("text/csv")
+  ) { uri ->
+    if (uri != null) {
+      exportCsv(uri)
+    }
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -144,7 +153,10 @@ class MainActivity : AppCompatActivity() {
 
     MoreActionDialog(
       activity = this,
-      drawerLayout = drawerLayout
+      drawerLayout = drawerLayout,
+      onExport = {
+        exportCsvLauncher.launch("notes-${System.currentTimeMillis()}.csv")
+      }
     ).bind(moreActionMenu)
   }
 
@@ -177,4 +189,16 @@ class MainActivity : AppCompatActivity() {
       super.onBackPressed()
     }
   }
+
+  private fun exportCsv(uri: android.net.Uri) {
+    viewModel.exportNotes { notes ->
+      contentResolver.openOutputStream(uri)?.let { output ->
+        com.catcode.note_app.util.CsvExporter.writeNotesToCsv(
+          notes = notes,
+          outputStream = output
+        )
+      }
+    }
+  }
+
 }

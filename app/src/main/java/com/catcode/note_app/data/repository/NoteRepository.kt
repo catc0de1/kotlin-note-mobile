@@ -20,4 +20,8 @@ class NoteRepository(private val noteDao: NoteDao) {
   suspend fun deleteNote(note: NoteEntity) {
     noteDao.delete(note)
   }
+
+  suspend fun getAllNotesForExport(): List<NoteEntity> {
+    return noteDao.getAll()
+  }
 }

@@ -10,7 +10,8 @@ import com.catcode.note_app.R
 
 class MoreActionDialog(
   private val activity: Activity,
-  private val drawerLayout: DrawerLayout
+  private val drawerLayout: DrawerLayout,
+  private val onExport: () -> Unit
 ) {
 
   fun bind(menuView: ImageView) {
@@ -49,6 +50,4 @@ class MoreActionDialog(
   }
 
     private fun onImport() {}
-
-    private fun onExport() {}
 }

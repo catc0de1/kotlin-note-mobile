@@ -41,4 +41,13 @@ class NoteViewModel(
       loadNotes()
     }
   }
+
+  fun exportNotes(
+    onResult: (List<NoteEntity>) -> Unit
+  ) {
+    viewModelScope.launch {
+      val notes = repository.getAllNotesForExport()
+      onResult(notes)
+    }
+  }
 }
