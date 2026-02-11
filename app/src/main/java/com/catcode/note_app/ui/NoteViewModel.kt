@@ -13,11 +13,20 @@ class NoteViewModel(
 ) : ViewModel() {
 
   private val _notes = MutableStateFlow<List<NoteEntity>>(emptyList())
+  private var currentKeyword: String? = null
+  private var currentSortAsc: Boolean = true
   val notes: StateFlow<List<NoteEntity>> = _notes
 
   fun loadNotes() {
+    // viewModelScope.launch {
+    //   _notes.value = repository.getAllNotes()
+    // }
+    refreshNotes()
+  }
+
+  fun refreshNotes() {
     viewModelScope.launch {
-      _notes.value = repository.getAllNotes()
+      _notes.value = repository.getNotes(currentKeyword, currentSortAsc)
     }
   }
 
@@ -59,12 +68,21 @@ class NoteViewModel(
   }
 
   fun searchNotes(keyword: String) {
-    viewModelScope.launch {
-      if (keyword.isBlank()) {
-        loadNotes()
-      } else {
-        _notes.value = repository.searchNotesByName(keyword)
-      }
-    }
+    currentKeyword = keyword
+    refreshNotes()
+    // viewModelScope.launch {
+    //   if (keyword.isBlank()) {
+    //     loadNotes()
+    //   } else {
+    //     _notes.value = repository.searchNotesByName(keyword)
+    //   }
+    // }
   }
+
+  fun toggleSortDate() {
+    currentSortAsc = !currentSortAsc
+    refreshNotes()
+  }
+
+  fun isSortAsc(): Boolean = currentSortAsc
 }

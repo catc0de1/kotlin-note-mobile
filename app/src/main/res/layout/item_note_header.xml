@@ -17,15 +17,37 @@
     android:textStyle="bold"
     android:padding="8dp"/>
 
-	<TextView
-		android:id="@+id/textDate"
-		android:layout_width="100dp"
-		android:layout_height="wrap_content"
-		android:text="Tanggal"
+	<LinearLayout
+    android:id="@+id/layoutSortDate"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
     android:background="@drawable/cell_header_bg"
-    android:textColor="#333333"
-		android:textStyle="bold"
-		android:padding="8dp"/>
+		android:foreground="?attr/selectableItemBackground"
+    android:padding="8dp"
+    android:clickable="true"
+    android:focusable="true"
+	>
+
+    <TextView
+			android:id="@+id/textDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Tanggal"
+			android:textColor="#333333"
+			android:textStyle="bold"
+		/>
+
+    <ImageView
+			android:id="@+id/iconSortDate"
+			android:layout_width="16dp"
+			android:layout_height="16dp"
+			android:layout_marginStart="4dp"
+			android:src="@drawable/ic_arrow_up_333333"
+			android:tint="#333333"
+		/>
+	</LinearLayout>
 
 	<TextView
 		android:id="@+id/textAddress"

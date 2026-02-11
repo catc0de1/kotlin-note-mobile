@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.ViewModelProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.coroutines.launch
+import android.widget.LinearLayout
 import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.EditText
@@ -71,6 +72,9 @@ class MainActivity : AppCompatActivity() {
 
     val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
     val moreActionMenu = findViewById<ImageView>(R.id.moreActionMenu)
+
+    val layoutSortDate = findViewById<LinearLayout>(R.id.layoutSortDate)
+    val iconSortDate = findViewById<ImageView>(R.id.iconSortDate)
 
     // noteAdapter = NoteAdapter(mutableListOf())
     noteAdapter = NoteAdapter(
@@ -136,6 +140,12 @@ class MainActivity : AppCompatActivity() {
     observeNotes()
     viewModel.loadNotes()
 
+    if (viewModel.isSortAsc()) {
+      iconSortDate.setImageResource(R.drawable.ic_arrow_up_333333)
+    } else {
+      iconSortDate.setImageResource(R.drawable.ic_arrow_down_333333)
+    }
+
     tableScroll.indexRecycler = indexRv
     tableScroll.headerScroll = headerScroll
 
@@ -189,6 +199,16 @@ class MainActivity : AppCompatActivity() {
 
       override fun afterTextChanged(s: android.text.Editable?) {}
     })
+
+    layoutSortDate.setOnClickListener {
+      viewModel.toggleSortDate()
+
+      if (viewModel.isSortAsc()) {
+        iconSortDate.setImageResource(R.drawable.ic_arrow_up_333333)
+      } else {
+        iconSortDate.setImageResource(R.drawable.ic_arrow_down_333333)
+      }
+    }
   }
 
     private fun observeNotes() {

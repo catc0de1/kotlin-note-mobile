@@ -5,7 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
 import androidx.room.OnConflictStrategy
+import androidx.room.RawQuery
 import androidx.room.Query
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.catcode.note_app.data.entity.NoteEntity
 
 @Dao
@@ -16,6 +18,9 @@ interface NoteDao {
 
   @Query("SELECT * FROM notes ORDER BY date ASC")
   suspend fun getAll(): List<NoteEntity>
+
+  @RawQuery
+  suspend fun getNotes(query: SupportSQLiteQuery): List<NoteEntity>
 
   @Update
   suspend fun update(note: NoteEntity)
