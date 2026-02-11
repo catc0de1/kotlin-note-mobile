@@ -20,14 +20,14 @@ Android App built with kotlin and App Compact. Android material are optional. Pu
 #### Main feature
 - [x] Excel like prototipe for note items
 - [x] Create static column (index)
-- [ ] Create search bar on bottom (static)
+- [x] Create search bar on bottom (static)
 - [x] Build create button on left bottom (static)
 - [x] Functional CRUD item
 
 #### Data management
-- [ ] About, backup, and exit on drawable
+- [x] About, backup, and exit on drawable
 - [x] Using internal or room storage
-- [ ] Manual backup using json or csv
+- [x] Manual backup using json or csv
 
 #### Finishing
 - [ ] Style finishing
@@ -91,7 +91,21 @@ Read more environment setup for Linux Mint in my blog [here](https://zblogzone.n
       "build-tools;34.0.0"
     ```
 
-5. **Setting `local.properties`**
+5. **Setting gradle.properties**
+
+    Make `gradle.properties` like `gradle.properties.example` for example:
+
+    ```ini
+    org.gradle.jvmargs=-Xmx2g
+    android.useAndroidX=true
+    kotlin.code.style=official
+
+    # SECRET
+    KEYSTORE_PASSWORD=xxx
+    KEY_PASSWORD=xxx
+    ```
+
+6. **Setting `local.properties`**
    
     Make `local.properties` file in root project.
 

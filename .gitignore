@@ -2,6 +2,7 @@
 .gradle/
 **/build/
 local.properties
+gradle.properties
 
 # Signing
 *.jks
