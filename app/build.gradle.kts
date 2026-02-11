@@ -21,9 +21,19 @@ android {
     targetCompatibility = JavaVersion.VERSION_17
   }
 
+  signingConfigs {
+    create("release") {
+      storeFile = rootProject.file("noteapp-release.keystore")
+      storePassword = project.property("KEYSTORE_PASSWORD")?.toString() ?: error("KEYSTORE_PASSWORD not found")
+      keyAlias = "noteapp"
+      keyPassword = project.property("KEY_PASSWORD")?.toString()?: error("KEY_PASSWORD not found")
+    }
+  }
+
   buildTypes {
-    getByName("debug") {
+    getByName("release") {
       isMinifyEnabled = false
+      signingConfig = signingConfigs.getByName("release")
     }
   }
 
@@ -41,15 +51,6 @@ android {
 
   buildFeatures {
     viewBinding = true
-  }
-
-  signingConfigs {
-    create("release") {
-      storeFile = file("noteapp-release.keystore")
-      storePassword = project.property("KEYSTORE_PASSWORD")?.toString() ?: error("KEYSTORE_PASSWORD not found")
-      keyAlias = "noteapp"
-      // keyPassword = project.property("KEY_PASSWORD")?.toString()?: error("KEY_PASSWORD not found")
-    }
   }
 }
 
