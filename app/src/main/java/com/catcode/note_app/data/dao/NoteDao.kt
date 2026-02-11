@@ -25,4 +25,7 @@ interface NoteDao {
 
   @Query("DELETE FROM notes")
   suspend fun deleteAll()
+
+  @Query("SELECT * FROM notes WHERE name LIKE '%' || :keyword || '%' ORDER BY date ASC")
+  suspend fun searchByName(keyword: String): List<NoteEntity>
 }

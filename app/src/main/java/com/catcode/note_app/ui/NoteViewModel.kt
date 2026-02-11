@@ -57,4 +57,14 @@ class NoteViewModel(
       loadNotes()
     }
   }
+
+  fun searchNotes(keyword: String) {
+    viewModelScope.launch {
+      if (keyword.isBlank()) {
+        loadNotes()
+      } else {
+        _notes.value = repository.searchNotesByName(keyword)
+      }
+    }
+  }
 }
