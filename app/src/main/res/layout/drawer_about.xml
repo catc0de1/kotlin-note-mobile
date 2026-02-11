@@ -10,7 +10,7 @@
   <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Note App"
+    android:text="Karna Notes"
     android:textSize="20sp"
     android:textStyle="bold"
     android:textColor="#000"/>
@@ -74,7 +74,7 @@
   <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Version: 1.0.0"
+    android:text="Version: 1.0.0 (proto)"
     android:textColor="#444"/>
 
   <TextView

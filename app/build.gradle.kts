@@ -13,7 +13,7 @@ android {
     minSdk = 26
     targetSdk = 34
     versionCode = 1
-    versionName = "1.0"
+    versionName = "1.0.0"
   }
 
   compileOptions {
@@ -41,6 +41,15 @@ android {
 
   buildFeatures {
     viewBinding = true
+  }
+
+  signingConfigs {
+    create("release") {
+      storeFile = file("noteapp-release.keystore")
+      storePassword = project.property("KEYSTORE_PASSWORD")?.toString() ?: error("KEYSTORE_PASSWORD not found")
+      keyAlias = "noteapp"
+      // keyPassword = project.property("KEY_PASSWORD")?.toString()?: error("KEY_PASSWORD not found")
+    }
   }
 }
 
