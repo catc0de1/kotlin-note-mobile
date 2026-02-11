@@ -109,9 +109,9 @@ class EditNoteDialog(
           return@setOnClickListener
         }
 
-        val rawPrice = CurrencyFormatter.extractRawValue(
-          inputPrice.text.toString()
-        )
+        val rawPrice = CurrencyFormatter
+          .extractRawValue(inputPrice.text.toString())
+          .toLong()
 
         val updated = note.copy(
           name = name,

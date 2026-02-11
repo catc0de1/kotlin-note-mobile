@@ -12,6 +12,6 @@ data class NoteEntity(
   val name: String,
   val date: String,
   val address: String,
-  val price: Int,
+  val price: Long,
   val status: String
 )

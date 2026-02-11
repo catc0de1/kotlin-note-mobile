@@ -86,9 +86,9 @@ class AddNoteDialog(
           return@setOnClickListener
         }
 
-        val rawPrice = CurrencyFormatter.extractRawValue(
-          inputPrice.text.toString()
-        )
+        val rawPrice = CurrencyFormatter
+          .extractRawValue(inputPrice.text.toString())
+          .toLong()
 
         val note = NoteEntity(
           name = name,

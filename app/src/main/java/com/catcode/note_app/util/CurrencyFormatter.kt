@@ -17,8 +17,8 @@ object CurrencyFormatter {
     return "Rp ${formatter.format(value)}"
   }
 
-  fun extractRawValue(formatted: String): Int {
+  fun extractRawValue(formatted: String): Long {
     return formatted.replace("[^\\d]".toRegex(), "")
-      .toIntOrNull() ?: 0
+      .toLongOrNull() ?: 0
   }
 }
