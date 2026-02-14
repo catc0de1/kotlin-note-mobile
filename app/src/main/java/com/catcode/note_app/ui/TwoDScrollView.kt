@@ -81,23 +81,23 @@ class TwoDScrollView @JvmOverloads constructor(
 
   override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
     when (ev.actionMasked) {
-        MotionEvent.ACTION_DOWN -> {
-            lastX = ev.x
-            lastY = ev.y
-            isDragging = false
-            return false
-        }
+      MotionEvent.ACTION_DOWN -> {
+        lastX = ev.x
+        lastY = ev.y
+        isDragging = false
+        return false
+      }
 
-        MotionEvent.ACTION_MOVE -> {
-            val dx = kotlin.math.abs(ev.x - lastX)
-            val dy = kotlin.math.abs(ev.y - lastY)
+      MotionEvent.ACTION_MOVE -> {
+        val dx = kotlin.math.abs(ev.x - lastX)
+        val dy = kotlin.math.abs(ev.y - lastY)
 
-            if (dx > touchSlop || dy > touchSlop) {
-                isDragging = true
-                parent.requestDisallowInterceptTouchEvent(true)
-                return true
-            }
+        if (dx > touchSlop || dy > touchSlop) {
+          isDragging = true
+          parent.requestDisallowInterceptTouchEvent(true)
+          return true
         }
+      }
     }
     return false
   }

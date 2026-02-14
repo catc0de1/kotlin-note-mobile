@@ -12,109 +12,101 @@ import com.catcode.note_app.data.entity.NoteEntity
 import com.catcode.note_app.util.CurrencyFormatter
 
 class NoteAdapter(
-    private val notes: MutableList<NoteEntity>,
-    private val onRowSelected: (Int) -> Unit,
-    private val onEdit: (NoteEntity) -> Unit,
-    private val onDelete: (NoteEntity) -> Unit
+  private val notes: MutableList<NoteEntity>,
+  private val onRowSelected: (Int) -> Unit,
+  private val onEdit: (NoteEntity) -> Unit,
+  private val onDelete: (NoteEntity) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
   private var selectedPosition = -1
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        // val id: TextView = view.findViewById(R.id.textId)
-        val name: TextView = view.findViewById(R.id.textName)
-        val date: TextView = view.findViewById(R.id.textDate)
-        val address: TextView = view.findViewById(R.id.textAddress)
-        val priceLabel: TextView = view.findViewById(R.id.textPriceLabel)
-        val priceValue: TextView = view.findViewById(R.id.textPriceValue)
-        val status: TextView = view.findViewById(R.id.textStatus)
-        // val action: ImageButton = view.findViewById(R.id.btnAction)
+  inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    val name: TextView = view.findViewById(R.id.textName)
+    val date: TextView = view.findViewById(R.id.textDate)
+    val address: TextView = view.findViewById(R.id.textAddress)
+    val priceLabel: TextView = view.findViewById(R.id.textPriceLabel)
+    val priceValue: TextView = view.findViewById(R.id.textPriceValue)
+    val status: TextView = view.findViewById(R.id.textStatus)
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    val view = LayoutInflater.from(parent.context)
+      .inflate(R.layout.item_note_row, parent, false)
+    return ViewHolder(view)
+  }
+
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    val note = notes[position]
+
+    val bg = when {
+      position == selectedPosition ->
+        R.drawable.cell_row_selected
+      position % 2 == 0 ->
+        R.drawable.cell_row_even
+      else ->
+        R.drawable.cell_row_odd
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_note_row, parent, false)
-        return ViewHolder(view)
+    holder.itemView.setBackgroundResource(bg)
+
+    holder.name.text = note.name
+    holder.date.text = note.date
+    holder.address.text = note.address
+    holder.status.text = note.status
+
+    holder.priceLabel.text = "Rp"
+    holder.priceValue.text =
+      CurrencyFormatter.formatRupiah(note.price.toString())
+        .replace("Rp ", "")
+
+    holder.itemView.setOnClickListener {
+      val oldPos = selectedPosition
+      selectedPosition = position
+
+      if (oldPos != -1) notifyItemChanged(oldPos)
+      notifyItemChanged(position)
+
+      onRowSelected(position)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      val note = notes[position]
+    holder.itemView.setOnLongClickListener {
+      val oldPos = selectedPosition
+      selectedPosition = position
 
-      val bg = when {
-        position == selectedPosition ->
-          R.drawable.cell_row_selected
-        position % 2 == 0 ->
-          R.drawable.cell_row_even
-        else ->
-          R.drawable.cell_row_odd
-      }
+      if (oldPos != -1) notifyItemChanged(oldPos)
+      notifyItemChanged(position)
 
-      holder.itemView.setBackgroundResource(bg)
+      onRowSelected(position)
 
-        // holder.id.text = note.id.toString()
-        holder.name.text = note.name
-        holder.date.text = note.date
-        holder.address.text = note.address
-        holder.status.text = note.status
+      val popup = PopupMenu(holder.itemView.context, holder.itemView)
+      popup.inflate(R.menu.menu_note_row)
 
-        holder.priceLabel.text = "Rp"
-        holder.priceValue.text =
-          CurrencyFormatter.formatRupiah(note.price.toString())
-            .replace("Rp ", "")
-
-        // holder.action.setOnClickListener {
-            // nanti bisa popup menu (Edit / Delete)
-            // onEdit(position)
-        // }
-
-      holder.itemView.setOnClickListener {
-        val oldPos = selectedPosition
-        selectedPosition = position
-
-        if (oldPos != -1) notifyItemChanged(oldPos)
-        notifyItemChanged(position)
-
-        onRowSelected(position)
-      }
-
-      holder.itemView.setOnLongClickListener {
-        val oldPos = selectedPosition
-        selectedPosition = position
-
-        if (oldPos != -1) notifyItemChanged(oldPos)
-        notifyItemChanged(position)
-
-        onRowSelected(position)
-
-        val popup = PopupMenu(holder.itemView.context, holder.itemView)
-        popup.inflate(R.menu.menu_note_row)
-
-        popup.setOnMenuItemClickListener { item ->
-          when (item.itemId) {
-            R.id.action_edit -> {
-              onEdit(note)
-              true
-            }
-            R.id.action_delete -> {
-              onDelete(note)
-              true
-            }
-            else -> false
+      popup.setOnMenuItemClickListener { item ->
+        when (item.itemId) {
+          R.id.action_edit -> {
+            onEdit(note)
+            true
           }
+          R.id.action_delete -> {
+            onDelete(note)
+            true
+          }
+          else -> false
         }
-
-        popup.show()
-        true
       }
-    }
 
-    override fun getItemCount(): Int = notes.size
-
-    fun submitData(newNotes: List<NoteEntity>) {
-      notes.clear()
-      notes.addAll(newNotes)
-      notifyDataSetChanged()
+      popup.show()
+      true
     }
+  }
+
+  override fun getItemCount(): Int = notes.size
+
+  fun submitData(newNotes: List<NoteEntity>) {
+    notes.clear()
+    notes.addAll(newNotes)
+    notifyDataSetChanged()
+  }
 
   fun clearSelection() {
     val oldPos = selectedPosition

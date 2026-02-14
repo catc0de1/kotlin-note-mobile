@@ -18,9 +18,6 @@ class NoteViewModel(
   val notes: StateFlow<List<NoteEntity>> = _notes
 
   fun loadNotes() {
-    // viewModelScope.launch {
-    //   _notes.value = repository.getAllNotes()
-    // }
     refreshNotes()
   }
 
@@ -70,13 +67,6 @@ class NoteViewModel(
   fun searchNotes(keyword: String) {
     currentKeyword = keyword
     refreshNotes()
-    // viewModelScope.launch {
-    //   if (keyword.isBlank()) {
-    //     loadNotes()
-    //   } else {
-    //     _notes.value = repository.searchNotesByName(keyword)
-    //   }
-    // }
   }
 
   fun toggleSortDate() {

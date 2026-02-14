@@ -1,11 +1,6 @@
 package com.catcode.note_app
 
 import android.os.Bundle
-// import androidx.activity.ComponentActivity
-// import androidx.activity.compose.setContent
-// import androidx.compose.material3.Text
-// import androidx.compose.runtime.Composable
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,7 +71,6 @@ class MainActivity : AppCompatActivity() {
     val layoutSortDate = findViewById<LinearLayout>(R.id.layoutSortDate)
     val iconSortDate = findViewById<ImageView>(R.id.iconSortDate)
 
-    // noteAdapter = NoteAdapter(mutableListOf())
     noteAdapter = NoteAdapter(
       mutableListOf(),
       onRowSelected = {
