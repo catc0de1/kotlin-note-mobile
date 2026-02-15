@@ -1,211 +1,66 @@
-# Note App
+# Karna Notes
 
 Android App built with kotlin and App Compact. Android material are optional. Pure using usb debugging and from scratch template from [https://github.com/catc0de1/kotlin-minimal-starter](https://github.com/catc0de1/kotlin-minimal-starter.git)
 
 ---
 
-## Project Goals
+## Features
 
-### Features
+- Create note for spesific task using strict format
+- Validation on create or update item
+- Editable and deletable item
+- Excel column UI/UX style
+- Internal storage app with *Room*
+- Manual backup (export) with `.csv` format
+- Import data with `.csv` format (soon)
 
-- Create note app for spesific task
-- Can create new item with validation
-- Update and deletable item
-- Excel like style
-- Internal storage app
-- Manual backup with csv or json
-
-### To Do
-
-#### Main feature
-- [x] Excel like prototipe for note items
-- [x] Create static column (index)
-- [x] Create search bar on bottom (static)
-- [x] Build create button on left bottom (static)
-- [x] Functional CRUD item
-
-#### Data management
-- [x] About, backup, and exit on drawable
-- [x] Using internal or room storage
-- [x] Manual backup using json or csv
-
-#### Finishing
-- [ ] Style finishing
-- [ ] Brand and themes
-- [ ] Independent deployment
+**Format Data**:
+|Column |Value                                      |
+|-------|-------------------------------------------|
+|ID     |Imuttable, Auto-generate                   |
+|Name   |String, Required                           |
+|Date   |String, ISO Format, Default = current date |
+|Address|String, Required                           |
+|Price  |Int, Default = 0                           |
+|Status |String, Default = "-"                      |
 
 ---
 
-## Requirements
+## Spesification
 
-### Hardware
-- Android phone with **USB debugging enabled**
-- USB cable
+**Minimum Spec**:
+- Version: Android 8.0 (Oreo)
+- Storage: > 10 MB
 
-### Software (Linux Mint)
-- OpenJDK 17 (or compatible)
-- Android SDK Command Line Tools
-- Gradle Wrapper (included)
-- ADB
+**Recommended Spec**:
+- Version: Android 14
 
 ---
 
-## Environment Setup
+## Installation
 
-Read more environment setup for Linux Mint in my blog [here](https://zblogzone.netlify.app/blog/tutorial/kotlin-cli-only).
+1. **Download APK File**
 
-1. **Install Java (OpenJDK)**
+    Download APK file on [Drive](https://drive.google.com/drive/folders/1lIhQGIfjypRPGX33OD3Y5Zvc9adG1vGN?usp=sharing) or my [GitHub](https://github.com/catc0de1/kotlin-note-mobile/tags)
 
-    ```bash
-    sudo apt update
-    sudo apt install openjdk-17-jdk
-    ```
-    
-2. **Install Android SDK (Command Line Only)**
+    Choose version of apk and allow download from this site.
 
-    Download command line tools from Google, [https://developer.android.com/studio#command-tools](https://developer.android.com/studio#command-tools), then extract in `$HOME/Android/Sdk/cmdline-tools`
+2. **Deactive Android Security for a While**
 
-3. **Configure Environment Variables**
+    This application is independent deployment, not from PlayStore or AppStore. So inactive Android security for **temporary**.
 
-    Add to `~/.bashrc` or `~/.zshrc`:
+3. **Install Application**
 
-    ```bash
-    export ANDROID_HOME=$HOME/Android/Sdk
-    export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
-    export PATH=$PATH:$ANDROID_HOME/platform-tools
-    ```
-
-    Reload:
-
-    ```bash
-    source ~/.bashrc
-    ```
-
-4. **Install Required SDK Packages**
-
-    ```bash
-    sdkmanager --licenses
-    sdkmanager \
-      "platform-tools" \
-      "platforms;android-34" \
-      "build-tools;34.0.0"
-    ```
-
-5. **Setting gradle.properties**
-
-    Make `gradle.properties` like `gradle.properties.example` for example:
-
-    ```ini
-    org.gradle.jvmargs=-Xmx2g
-    android.useAndroidX=true
-    kotlin.code.style=official
-
-    # SECRET
-    KEYSTORE_PASSWORD=xxx
-    KEY_PASSWORD=xxx
-    ```
-
-6. **Setting `local.properties`**
-   
-    Make `local.properties` file in root project.
-
-    ```ini
-    sdk.dir=/home/USERNAME/Android/Sdk
-    ```
-
-    Which is USERNAME base on OS username. Each OS have different configuration.
-
-## Device Setup
-
-On your Android phone:
-
-1. Enable **Developer Options**
-2. Enable **USB Debugging**
-3. Connect device via USB
-
-verify connection:
-
-```bash
-adb devices
-```
-
-Expected output:
-
-```bash
-List of devices attached
-XXXXXXXX	device
-```
+    Install application after deactive Android security. After installation success, **Don't forget to turn on Android Security**
 
 ---
 
-## Build & Run (CLI Only)
+## Development Environment Setup
 
-### Build APK
-
-```bash
-./gradlew assembleDebug
-```
-
-APK output:
-
-```text
-app/build/outputs/apk/debug/app-debug.apk
-```
-
-### Install to Device
-
-```bash
-./gradlew installDebug
-```
-
-or
-
-```bash
-adb install app/build/outputs/apk/debug/app-debug.apk
-```
-
-If want continuous development
-
-```bash
-./gradlew installDebug --continuous
-```
-
-### Launch App
-
-```adb
-adb shell monkey -p your.package.name -c android.intent.category.LAUNCHER 1
-```
-
-### Uninstall App
-
-```adb
-adb uninstall com.catcode.noteapp
-```
-
----
-
-## Debugging
-
-View logs:
-
-```bash
-adb logcat
-```
-
-Filtered:
-
-```bash
-adb logcat | grep AndroidRuntime
-```
-
-Clean log:
-
-```bash
-adb logcat -c
-```
+Read environment setup in my blog [here](https://zblogzone.netlify.app/blog/tutorial/kotlin-cli-only) or from [starter](https://github.com/catc0de1/kotlin-minimal-starter).
 
 ---
 
 ## License
 
-This Starter is [MIT Licensed](https://github.com/catc0de1/kotlin-note-mobile?tab=MIT-1-ov-file)
+This project [Stritch Licensed](https://github.com/catc0de1/kotlin-note-mobile?tab=MIT-1-ov-file)
